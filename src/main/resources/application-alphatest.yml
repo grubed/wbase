@@ -1,0 +1,48 @@
+## 线上 & UAT & Docker DEV 配置
+server:
+  port: 8080
+
+spring:
+  datasource:
+    druid:
+      url: jdbc:mysql://rm-j6c8i18497p2f28477o.mysql.rds.aliyuncs.com:3306/windbase?useUnicode=yes&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
+      username: windbase
+      password: Wad
+  redis:
+    database: 0
+    host: 172.18.3.24
+    port: 6379
+    password: Gomrwind123
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: 39.98.169.214 #47.91.205.150 #10.86.32.130 #172.18.3.153
+          zkNodes: 39.98.169.214 #47.91.205.150 #47.91.205.150 #172.18.3.152
+          defaultBrokerPort: 9092
+
+mrwind:
+  enable_sms: true
+  baseUrl:
+    wind: http://alpha-mind-1.tooc.io/
+    delivery: hangzhou&http://hzdelivery.wisready.com/,riyadh&http://ryddelivery.wisready.com/,iceland&http://icedelivery.wisready.com/,taiwan&http://twdelivery.wisready.com/
+    express: hangzhou&http://hzexpress.wisready.com/,riyadh&http://rydexpress.wisready.com/,iceland&http://iceexpress.wisready.com/,taiwan&http://twexpress.wisready.com/
+    dispatch: hangzhou&http://hzdispatch.wisready.com/,riyadh&http://ryddispatch.wisready.com/,iceland&http://icedispatch.wisready.com/,taiwan&http://twdispatch.wisready.com/
+  key:
+    delivery: 78f0591a515844918d535eb45a239594
+    express: 78f0591a515844918d535eb45a239594
+  mongo:
+    host: dds-j6c15ec8d430f3f41494-pub.mongodb.rds.aliyuncs.com:3717,dds-j6c15ec8d430f3f42249-pub.mongodb.rds.aliyuncs.com:3717
+    dbWindBase: windbase
+    user: windbase
+    pwd: wadmin_2019
+    authDb: windbase
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://wind:fa87d67b-e53c-4139-ad0b-44c4943b5e7a@172.19.0.9:8080/eureka
+    enabled: false
+  instance:
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    prefer-ip-address: true

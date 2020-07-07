@@ -1,0 +1,62 @@
+## 线上 & UAT & Docker DEV 配置
+server:
+  port: 8080
+
+spring:
+  datasource:
+    druid:
+      url: jdbc:mysql://192.168.0.124:3306/windbase?useUnicode=yes&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
+      username: root
+      password: Wad
+  redis:
+    database: 0
+    host: 192.168.0.124
+    port: 6379
+    password: Gomrwind123
+    timeout: 1000
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: 192.168.0.124
+          zkNodes: 192.168.0.124
+          defaultBrokerPort: 9092
+        streams:
+          binder:
+            configuration.commit.interval.ms: 1000
+      bindings:
+        output1:
+          destination: user.info.change
+
+        output2:
+          destination: new.user.and.friend.repaly
+
+        input1:
+          destination: new.user.and.friend
+          group: windbase
+
+mrwind:
+  enable_sms: true
+  baseUrl:
+    wind: http://beta.tooc.io/
+    delivery: hangzhou&http://hzdelivery.wisready.com/,riyadh&http://ryddelivery.wisready.com/,iceland&http://icedelivery.wisready.com/,taiwan&http://twdelivery.wisready.com/
+    express: hangzhou&http://hzexpress.wisready.com/,riyadh&http://rydexpress.wisready.com/,iceland&http://iceexpress.wisready.com/,taiwan&http://twexpress.wisready.com/
+    dispatch: hangzhou&http://hzdispatch.wisready.com/,riyadh&http://ryddispatch.wisready.com/,iceland&http://icedispatch.wisready.com/,taiwan&http://twdispatch.wisready.com/
+  key:
+    delivery: 78f0591a515844918d535eb45a239594
+    express: 78f0591a515844918d535eb45a239594
+  mongo:
+    host: 192.168.0.124:3717
+    dbWindBase: windbase
+    user: root
+    pwd: wind
+    authDb: admin
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://wind:fa87d67b-e53c-4139-ad0b-44c4943b5e7a@172.19.10.60:8090/eureka
+  instance:
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    prefer-ip-address: true
+
